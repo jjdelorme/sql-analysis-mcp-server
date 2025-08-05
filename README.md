@@ -23,7 +23,7 @@ This project is a simple example of a server that implements the [Model Context 
 To run the server and inspect it with the MCP Inspector tool, execute the following command in your terminal. You can find more information about the inspector tool in the [official documentation](https://modelcontextprotocol.io/legacy/tools/inspector#python).
 
 ```bash
-npx @modelcontextprotocol/inspector uv run mcp_server.py
+npx @modelcontextprotocol/inspector uv run mcp_server.py -- --sql_path /path/to/your/sql/files
 ```
 
 This command does the following:
@@ -39,7 +39,7 @@ In a production environment, an MCP client would connect to the server. The clie
 You can generate the JSON configuration for this server using the `fastmcp` command-line tool:
 
 ```bash
-fastmcp install mcp-json mcp_server.py
+fastmcp install mcp-json mcp_server.py -- --sql_path /path/to/your/sql/files
 ```
 
 This will output a JSON object that you can use to configure an MCP client. The generated configuration for this server will look like this:
@@ -49,12 +49,11 @@ This will output a JSON object that you can use to configure an MCP client. The 
   "mcpServers": {
     "sql-analysis-server": {
       "command": "uv",
-      "args": ["run", "mcp_server.py"],
+      "args": ["run", "mcp_server.py", "--", "--sql_path", "/path/to/your/sql/files"],
       "cwd": "/home/your-dev-folder/sql-analysis-mcp-server"
     }
   }
 }
-
 ```
 
-This configuration tells the client to start the "sql-analysis-server" by running the command `uv run mcp_server.py` and to communicate with it using the standard input/output (`stdio`) transport.
+This configuration tells the client to start the "sql-analysis-server" by running the command `uv run mcp_server.py -- --sql_path /path/to/your/sql/files` and to communicate with it using the standard input/output (`stdio`) transport.
